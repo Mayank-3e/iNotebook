@@ -93,8 +93,12 @@ const NoteState=(props)=>
       }, 1000);
   }
 
+  // setLoading to "none" or null
+  const [loading,setLoading]=useState("none")
+  const showLoading=(val)=>{setLoading(val)}
+
   return(
-      <NoteContext.Provider value={{notes,getnotes,addnote,deletenote,editnote,showAlert,alert}}>
+      <NoteContext.Provider value={{notes,getnotes,addnote,deletenote,editnote,showAlert,alert,loading,setLoading}}>
           {props.children}
       </NoteContext.Provider>
   )
