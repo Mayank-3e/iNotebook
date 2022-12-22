@@ -7,18 +7,20 @@ const Signup = () => {
     const [cpassword,setCpassword]=useState()
     const navigate=useNavigate()
     const context=useContext(noteContext)
-    const {showAlert}=context
+    const {showAlert,setLoading}=context
     let url=process.env.REACT_APP_API||"http://localhost:5000"
 
     const handleSubmit=async(e)=>
     {
         e.preventDefault()
+        setLoading()
         let response=await fetch(url+"/api/auth/createuser",
         {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(credentials)
         })
+        setLoading("none")
         response=await response.json()
         if(response.authToken)
         {
