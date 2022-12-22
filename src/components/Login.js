@@ -5,12 +5,13 @@ import noteContext from '../context/notes/noteContext'
 const Login = () => {
     const [credentials,setCredentials]=useState({email:"", password:""})
     const navigate=useNavigate()
-    const {showAlert}=useContext(noteContext)
+    const {showAlert,setLoading}=useContext(noteContext)
     const url=process.env.REACT_APP_API||"http://localhost:5000"
 
     const handleSubmit=async(e)=>
     {
         e.preventDefault()
+        setLoading()
         let response=await fetch(url+"/api/auth/login/",
         {
             method: 'POST',
@@ -18,6 +19,7 @@ const Login = () => {
             body: JSON.stringify(credentials)
         })
         response=await response.json()
+        setLoading("none")
         if(response.authToken)
         {
             localStorage.setItem('token',response.authToken)
